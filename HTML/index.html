@@ -1,0 +1,113 @@
+<html>
+<head>
+<style>
+pre { 
+	overflow-x:scroll;
+	background-color:lightgray;
+	border-style:solid;
+	border-width:1px;
+	border-radius:10px;
+	border-color:black;
+}
+</style>
+</head>
+
+<body>
+
+<h1>MirMark Installation Process</h1>
+
+<p>Copyright 2014, Lana Garmire, lgarmire@cc.hawaii.edu</p>
+
+<p>By copying and running this code on your platform, you agree to the <a href="LICENSE.txt">open source license agreement GPL v3</a>. If you already are running Ubuntu, you can proceed to the <a href="#ubuntu">Ubuntu installation instructions</a>. If you want to run a platform independent image of the code, you may proceed to the <a href="#docker">Docker installation instructions</a>. </p>
+
+<h2 id="ubuntu">Ubuntu Standalone Installation</h2>
+
+Install <a href="http://www.ubuntu.com/">Ubuntu</a>.
+
+<h3>Prepare Ubuntu</h3>
+
+Execute the following:
+
+<pre>
+<code>
+sudo apt-get update
+sudo apt-get -y install python-software-properties software-properties-common
+sudo add-apt-repository ppa:j-4/vienna-rna
+sudo apt-get update
+sudo apt-get -y install gbrowse 
+sudo apt-get -y install default-jdk 
+sudo apt-get -y install vienna-rna wget
+
+cd /tmp && wget http://mn.eng.hawaii.edu/~garmire/weka.jar && sudo cp weka.jar /usr/lib/jvm/default-java/jre/lib/ext/.
+
+sudo apt-get -y install build-essential
+cd /tmp && wget http://cbio.mskcc.org/microrna_data/miRanda-aug2010.tar.gz && tar zxvf miRanda-aug2010.tar.gz && cd miRanda-3.3a && ./configure && make && sudo make install
+
+cd /tmp && wget http://mn.eng.hawaii.edu/~garmire/MirMarkRNApl.tgz && tar zxvf MirMarkRNApl.tgz && sudo cp MirMarkRNApl/*.pl /usr/share/perl5
+cd /tmp && wget http://mn.eng.hawaii.edu/~garmire/MirMark.tgz && tar zxvf MirMark.tgz && sudo cp MirMark/*.pl /usr/local/bin
+</code>
+</pre>
+
+<h3>Running MirMark Code</h3>
+
+Run the test example by executing the code:
+
+<pre>
+<code>
+# Fetch the example files
+cd ~
+wget http://mn.eng.hawaii.edu/~garmire/MirMarkTest.tgz
+tar zxvf MirMarkTest.tgz
+cd MirMarkTest
+
+# docker needs to connect the directory "MirMarkTest" to the Docker image
+# It does this through the "-v {host directory:image directory}" option.
+# The -w option establishes the working directory.
+# All other mirmark perl scripts can be run in the same manner.
+
+siteFeaturesARFF.pl mirs.fa utrs.fa fast.txt pairs.txt site_features rf.site.model
+# The result is stored in MirMarkTest/site_features.result
+utrFeaturesARFF.pl mirs.fa utrs.fa fast.txt pairs.txt utr_features rf.utr.model
+# The result is stored in MirMarkTest/utr_features.result
+</code>
+</pre>
+
+
+<h2 id="docker">Docker installation</h2>
+
+<p>Docker is another method of running code on a different OS like Windows 
+or Mac. It works by running a virtual machine through VirtualBox. The list 
+of commands below should work once Docker is installed.</p>
+
+<p>First install <a href="http://www.docker.com">Docker</a> and make sure it is running.</p>
+
+<h3>Pull MirMark Image</h3>
+
+<p>The MirMark image should already be configured through the following <a href="Dockerfile">Dockerfile</a>. You should be able to pull this image by running in Docker: [<code>docker pull dgarmire/mirmark</code>]. You should be able to build this image by running [<code>mkdir mirmark && wget http://mn.eng.hawaii.edu/~garmire/HTML/MirMark/Dockerfile && docker build -t dgarmire/mirmark .</code>].</p>
+
+<h3>Running MirMark Code</h3>
+
+To run the site and utr feature analysis using the example files provided:
+
+<pre>
+<code>
+# Fetch the example files
+cd ~
+wget http://mn.eng.hawaii.edu/~garmire/MirMarkTest.tgz
+tar zxvf MirMarkTest.tgz
+cd MirMarkTest
+
+# docker needs to connect the directory "MirMarkTest" to the Docker image
+# It does this through the "-v {host directory:image directory}" option.
+# The -w option establishes the working directory.
+# All other mirmark perl scripts can be run in the same manner.
+
+docker run -w /tmp/mnt -v /home/docker/MirMarkTest:/tmp/mnt -t dgarmire/mirmark siteFeaturesARFF.pl mirs.fa utrs.fa fast.txt pairs.txt site_features rf.site.model
+# The result is stored in MirMarkTest/site_features.result
+docker run -w /tmp/mnt -v /home/docker/MirMarkTest:/tmp/mnt -t dgarmire/mirmark utrFeaturesARFF.pl mirs.fa utrs.fa fast.txt pairs.txt utr_features rf.utr.model
+# The result is stored in MirMarkTest/utr_features.result
+</code>
+</pre>
+
+</body>
+</html>
