@@ -1,0 +1,6 @@
+NM_005461	hsa-miR-130a
+NM_139034	hsa-miR-143
+NM_005225	hsa-miR-20a
+NM_014572	hsa-miR-372
+NM_014572	hsa-miR-373
+NM_172037	hsa-miR-124
