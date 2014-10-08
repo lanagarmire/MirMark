@@ -1,0 +1,16 @@
+MirMark Installation
+
+
+Please see the HTML/index.html file for proper installation instructions.
+
+A preconfigured version is available through Dockerhub (see instructions):
+   docker pull dgarmire/mirmark
+Note: Docker is also a public repository.
+
+Note on installing from GitHub:
+1) The tar file MirMarkRNApl.tgz is generated from the RNApl directory by:
+     tar zcvf MirMarkRNApl.tgz --transform='s/RNApl/MirMarkRNApl/' RNApl
+2) The tar file MirMark.tgz is generated from the Core directory.
+     tar zcvf MirMark.tgz --transform='s/Core/MirMark/' Core 
+3) The tar file MirMarkTest.tgz is generated from the Test directory.
+     tar zcvf MirMarkTest.tgz --transform='s/Test/MirMarkTest/' Test
