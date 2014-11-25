@@ -198,7 +198,7 @@ sub getRnaMfe($)
 {
 	my $rnaSeq = shift();
 	
-	open(OUTPUT, "echo \"$rnaSeq\n\" | RNAfold 2> /dev/null |");
+	open(OUTPUT, "echo \"$rnaSeq\n\" | RNAfold --noPS 2> /dev/null |");
 
 	#while (my $line = <OUTPUT>) 
 	#{
@@ -237,7 +237,7 @@ sub getLocalRnaMfe($\@$)
 	
 	my $localRnaSeq = substr($rnaSeq, $startPos, $endPos-$startPos+1);
 	
-	open(OUTPUT, "echo \"$localRnaSeq\n\" | RNAfold 2> /dev/null |");
+	open(OUTPUT, "echo \"$localRnaSeq\n\" | RNAfold --noPS 2> /dev/null |");
 
 	# Get second line of output
 	my $line = <OUTPUT>;
@@ -260,7 +260,7 @@ sub getConstRnaMfe($\@)
 	my $endConst = "." x (length($rnaSeq) - $targetCandidate[2]);
 	my $const = $startConst . $targetConst . $endConst;
 	
-	open(OUTPUT, "echo \"$rnaSeq\n$const\n\" | RNAfold -C 2> /dev/null|");
+	open(OUTPUT, "echo \"$rnaSeq\n$const\n\" | RNAfold --noPS -C 2> /dev/null|");
 
 	#while (my $line = <OUTPUT>) 
 	#{
@@ -307,7 +307,7 @@ sub getLocalConstRnaMfe($\@$)
 	my $localRnaSeq = substr($rnaSeq, $startPos, $endPos-$startPos+1);
 	my $localConst = substr($const, $startPos, $endPos-$startPos+1);
 	
-	open(OUTPUT, "echo \"$localRnaSeq\n$localConst\n\" | RNAfold -C 2> /dev/null|");
+	open(OUTPUT, "echo \"$localRnaSeq\n$localConst\n\" | RNAfold --noPS -C 2> /dev/null|");
 	
 	# Get second line of output
 	my $line = <OUTPUT>;

@@ -14,3 +14,7 @@ Note on installing from GitHub:
      tar zcvf MirMark.tgz --transform='s/Core/MirMark/' Core 
 3) The tar file MirMarkTest.tgz is generated from the Test directory.
      tar zcvf MirMarkTest.tgz --transform='s/Test/MirMarkTest/' Test
+
+Second Note:
+1) Ensure you install weka.jar properly so it is found on your java classpath.
+2) Ensure miranda is found on your path: e.g., `which miranda` should work.

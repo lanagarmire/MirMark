@@ -407,7 +407,7 @@ pop(@wekaLines);
 my @wekaHeaders = split(/\s+/, shift(@wekaLines));
 
 my @lookupHeaders = ( "miR_ID", "mRNA_ID", "Start_position", "End_position", "Miranda_score" );
-my @resultHeaders = ( "miR_ID", "mRNA_ID", "Start_position", "End_position", "Miranda_score", "probability" );
+my @resultHeaders = ( "miR_ID", "mRNA_ID", "Start_position", "End_position", "Miranda_score", "predicted", "probability" );
 my @resultHeadersOutput = ( "MIR", "UTR", "Start position", "End position", "Miranda score", "Predicted", "Probability" );
 
 open(RESULT, ">$outputBaseName.result");
